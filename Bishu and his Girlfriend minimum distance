@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+using namespace std;
+vector<int>ve[30000];
+int visit[30000];
+int dist[30000];
+void dfs(int node, int dis){
+    visit[node]=1;
+    dist[node] = dis;
+    for(auto child:ve[node]){
+        if(visit[child]==0){
+           dfs(child, dis+1);
+        }
+    }
+}
+int main(){
+    int i,n,g,u,v;
+    cin>>n;
+    for(i=1; i<=n-1; i++){
+        cin>>u>>v;
+        ve[u].push_back(v);
+        ve[v].push_back(u);
+    }
+    dfs(1, 0);
+    cin>>g;
+    int x,ar[30000];
+    for(i=1; i<=g; i++){
+        cin>>ar[i];
+    }
+   int mn = INT_MAX;
+   x = -1;
+    for(i=1; i<=g; i++){
+        if(dist[ar[i]]<mn){
+            mn = dist[ar[i]];
+            x=ar[i];
+        }
+        else{
+            if(dist[ar[i]]==mn and ar[i]<x)
+                x = ar[i];
+        }
+    }
+    cout<<x<<endl;
+return 0;
+}
